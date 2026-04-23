@@ -1,0 +1,44 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import "./tailwind.css";
+
+import { Sora, Figtree, Quicksand } from "next/font/google";
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+});
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+});
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+});
+
+export const metadata: Metadata = {
+  title: "HOC Globe",
+  description: "HOC Globe Management",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={`${sora.variable} ${figtree.variable} ${quicksand.variable}`}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+        />
+      </head>
+
+      <body>{children}</body>
+    </html>
+  );
+}
