@@ -1,199 +1,213 @@
 "use client";
 
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function IndexNavbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [isEducationOpen, setIsEducationOpen] = useState(false);
+export default function SideNavbar() {
+  const [showMenu, setShowMenu] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const closeMenu = () => {
+    setShowMenu(false);
+    setShowDropdown(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const linkStyle =
-    "uppercase tracking-widest relative group cursor-pointer flex items-center gap-1";
-
-  // Handlers to ensure smooth transitions
-  const handleMouseEnter = () => setIsEducationOpen(true);
-  const handleMouseLeave = () => setIsEducationOpen(false);
-
   return (
-    <section
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-6 md:px-10 ">
-        <div
-          className={`flex justify-between items-center ${
-            scrolled ? "text-black" : "text-white"
-          }`}
-        >
-          {/* LOGO */}
-          <Link href="/homepage">
-            <Image
-              src="/portf/logo.png"
-              alt="logo"
-              width={120}
-              height={120}
-              className="object-contain"
-            />
+    <section>
+
+      {/* ================= TOP NAV ================= */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 transition-all duration-300 ${
+          isScrolled ? " shadow-md" : "bg-transparent"
+        }`}
+      >
+
+        {/* LOGO */}
+        <Link href="/">
+          <Image
+            src="/portf/logo.png"
+            alt="logo"
+            width={60}
+            height={60}
+            className="object-contain"
+          />
+        </Link>
+
+        {/* RIGHT SIDE */}
+        <div className="flex items-center gap-4">
+
+          <Link href="/contact">
+            <button
+              className={`text-sm md:text-base px-4 py-1 border rounded transition ${
+                isScrolled
+                  ? "text-black border-black"
+                  : "text-white border-white"
+              }`}
+            >
+              Contact
+            </button>
           </Link>
 
-          {/* MENU */}
-          <div className="flex gap-6 md:gap-10 items-center text-sm md:text-base relative">
-            <Link href="/about" className={linkStyle}>
-              ABOUT
-              <span className="underline-anim"></span>
-            </Link>
+          <button
+            onClick={() => setShowMenu(true)}
+            className={`text-2xl transition ${
+              isScrolled ? "text-black" : "text-white"
+            }`}
+          >
+            ☰
+          </button>
 
-            <Link href="/software" className={linkStyle}>
-              SOFTWARE
-              <span className="underline-anim"></span>
-            </Link>
-
-            {/* HOVER-TO-OPEN EDUCATION DROPDOWN */}
-            <div
-              className="relative group"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button className={`${linkStyle}  pr-2`}>
-                Education
-                <svg
-                  className={`w-3 h-3 transition-transform duration-300 ${
-                    isEducationOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-                <span className="underline-anim bottom-2"></span>
-              </button>
-
-              {/* DROPDOWN MENU */}
-              <div
-                className={`absolute top-full left-1/2 transform -translate-x-1/2 w-[500px] transition-all duration-300 origin-top ${
-                  isEducationOpen 
-                    ? "opacity-100 visible translate-y-0" 
-                    : "opacity-0 invisible -translate-y-2"
-                }`}
-              >
-                {/* Smoke Theme Container */}
-                <div className="mt-2 bg-[#F5F5F5]/90 backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden p-2">
-                  
-                  {/* Dropdown Items */}
-                  <Link
-                    href="/primary"
-                    className="group/item flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:bg-gray/100 hover:shadow-sm border border-transparent hover:border-gray-200"
-                  >
-                    <div className="relative">
-                        <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-                        <Image
-                          src="/portf/school.png"
-                          alt="Secondary Education"
-                          width={24}
-                          height={24}
-                          className="w-6 h-6 object-contain"
-                        />
-                      </div>
-                          <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
-                          <span className="text-xs font-bold text-white">1</span>
-                        </div>
-                    </div>
-                    <div>
-                      <h4 className="font-bold group-hover/item:text-blue-600 text-base"style={{ color: '#b684ff' }}>
-                        Primary Education
-                      </h4>
-                      <p className="text-sm text-gray-300">Foundation learning programs</p>
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/college"
-                    className="group/item flex items-center gap-4 p-4 mt-1 rounded-xl transition-all duration-300 hover:bg-white/80 hover:shadow-sm border border-transparent hover:border-gray-200"
-                  >
-                    <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-                        <Image
-                          src="/portf/college.png"
-                          alt="Secondary Education"
-                          width={24}
-                          height={24}
-                          className="w-6 h-6 object-contain"
-                        />
-                      </div>
-                           <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
-                          <span className="text-xs font-bold text-white">2</span>
-                        </div>
-                    </div>
-                    <div>
-                      <h4 className="font-bold  group-hover/item:text-emerald-600 text-base"style={{ color: '#b684ff' }}>
-                        Higher Study
-                      </h4>
-                      <p className="text-sm text-gray-300">Advanced skill development</p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <Link href="/infrastructure" className={linkStyle}>
-              INFRASTRUCTURE
-              <span className="underline-anim"></span>
-            </Link>
-
-            <Link href="/contact" className={linkStyle}>
-              CONTACT
-              <span className="underline-anim"></span>
-            </Link>
-
-            {/* BUTTON */}
-            <Link href="tel:+971505696439">
-              <button
-                className={`border px-6 py-2 text-sm font-medium tracking-wider transition-all duration-300 ${
-                  scrolled
-                    ? "text-black border-black hover:bg-black hover:text-white"
-                    : "text-white border-white hover:bg-white hover:text-black"
-                }`}
-              >
-                ENQUIRE
-              </button>
-            </Link>
-          </div>
         </div>
+      </nav>
+
+      {/* ================= OVERLAY ================= */}
+      <div
+        onClick={closeMenu}
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${
+          showMenu ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      />
+
+      {/* ================= SIDE DRAWER ================= */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[85%] sm:w-[70%] md:w-[420px] bg-white z-50 shadow-xl transform transition-transform duration-500 ${
+          showMenu ? "translate-x-0" : "translate-x-full"
+        }`}style={{ backgroundColor: "#ece0ff" }}
+      >
+
+        {/* HEADER */}
+        <div className="flex justify-between items-center p-5 border-b">
+          <Image
+            src="/portf/logo.png"
+            alt="logo"
+            width={90}
+            height={90}
+          />
+
+          <button onClick={closeMenu} className="text-2xl text-gray-700">
+            ✕
+          </button>
+        </div>
+
+        {/* MENU */}
+        <ul className="flex flex-col p-6 gap-5 text-gray-800">
+
+          <li>
+            <Link
+              href="/about"
+              onClick={closeMenu}
+              className="hover:text-[#b684ff] transition"
+            >
+              Our Story
+            </Link>
+          </li>
+
+          {/* ================= EDUCATION DROPDOWN ================= */}
+          <li>
+
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="flex justify-between w-full font-medium hover:text-[#b684ff] transition"
+            >
+              Education
+              <span>{showDropdown ? "▲" : "▼"}</span>
+            </button>
+
+            <div
+              className={`mt-4 space-y-4 transition-all ${
+                showDropdown ? "block" : "hidden"
+              }`}
+            >
+
+              {/* PRIMARY */}
+              <Link
+                href="/primary"
+                onClick={closeMenu}
+                className="flex items-center gap-4 p-3 rounded-xl hover:bg-purple-50 transition"
+              >
+                <div className="relative">
+                  <div className="w-12 h-12 bg-[#b684ff] rounded-2xl flex items-center justify-center">
+                    <Image
+                      src="/portf/school.png"
+                      alt="school"
+                      width={24}
+                      height={24}
+                    />
+                  </div>
+
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#b684ff] rounded-full flex items-center justify-center text-xs text-white">
+                    1
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-[#b684ff]">
+                    Primary Education
+                  </h4>
+                  <p className="text-sm text-gray-500">
+                    Foundation learning programs
+                  </p>
+                </div>
+              </Link>
+
+              {/* HIGHER STUDY */}
+              <Link
+                href="/college"
+                onClick={closeMenu}
+                className="flex items-center gap-4 p-3 rounded-xl hover:bg-purple-50 transition"
+              >
+                <div className="relative">
+                  <div className="w-12 h-12 bg-[#b684ff] rounded-2xl flex items-center justify-center">
+                    <Image
+                      src="/portf/college.png"
+                      alt="college"
+                      width={24}
+                      height={24}
+                    />
+                  </div>
+
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#b684ff] rounded-full flex items-center justify-center text-xs text-white">
+                    2
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-[#b684ff]">
+                    Higher Study
+                  </h4>
+                  <p className="text-sm text-gray-500">
+                    Advanced skill development
+                  </p>
+                </div>
+              </Link>
+
+            </div>
+          </li>
+
+          <li>
+            <Link
+              href="/contact"
+              onClick={closeMenu}
+              className="hover:text-[#b684ff] transition"
+            >
+              Contact Us
+            </Link>
+          </li>
+
+        </ul>
+
       </div>
-
-      {/* STYLES */}
-      <style jsx>{`
-        .underline-anim {
-          position: absolute;
-          left: 0;
-          bottom: -4px;
-          width: 0%;
-          height: 2px;
-          background-color: currentColor;
-          transition: width 0.3s ease;
-        }
-
-        .group:hover .underline-anim {
-          width: 100%;
-        }
-      `}</style>
     </section>
   );
 }

@@ -69,18 +69,18 @@ export default function HeroSection() {
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        <div className="relative z-10 flex items-center justify-between h-full px-8 max-w-7xl mx-auto">
+        <div className="relative z-10 flex lg:flex-row flex-col items-center justify-between h-full xl:px-8 px-0 max-w-7xl mx-auto">
 
           {/* LEFT CONTENT */}
           <div
-            className={`w-1/2 flex flex-col justify-center pl-12 ${
+            className={` justify-center xl:pl-12 pl-0 lg:pl-8 ${
               show ? "animate-slideInLeft" : "opacity-0"
             }`}
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl xl:text-5xl lg:text-4xl md:text-6xl font-bold mb-6 leading-tight xl:pt-0 pt-24 ">
               Mohanprasath S R
             </h1>
-            <h2 className="text-3xl md:text-4xl font-light text-white/90">
+            <h2 className="text-3xl xl:text-3xl lg:text-3xl md:text-4xl font-light text-white/90">
               Software Developer
             </h2>
           </div>
@@ -91,10 +91,10 @@ export default function HeroSection() {
               show ? "animate-slideInRight" : "opacity-0"
             }`}
           >
-            <div className="relative drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)]">
+            <div className="relative drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] ">
 
               {/* BACK IMAGE */}
-              <div className="absolute bottom-0 right-8 mb-24 w-[500px] h-[520px] z-0">
+              <div className="absolute bottom-0  xl:left-0 md:left-0  lg:left-0  left-44 xl:right-8 right-0 lg:right-8 md:right-8 mb-24 w-[540px] xl:w-[500px] lg:w-[400px] md:w-[300px] h-[540px] xl:h-[520px] md:h-[420px] lg:h-[320px] z-0">
                 <Image
                   src="/portf/mybackimg.png"
                   alt="background person"
@@ -104,7 +104,7 @@ export default function HeroSection() {
               </div>
 
               {/* MAIN IMAGE */}
-              <div className="relative w-[600px] h-[650px] z-10">
+             <div className="relative xl:left-0 md:left-0  lg:left-0  left-44 w-[550px] sm:w-[340px] md:w-[420px] lg:w-[520px] h-[570px] sm:h-[400px] md:h-[500px] lg:h-[620px] z-10">
                 <Image
                   src="/portf/mohandanner.png"
                   alt="Mohan"
