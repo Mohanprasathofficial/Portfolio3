@@ -2,23 +2,30 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export default function WhoIAm() {
-  const containerVariants = {
+  // ✅ Properly typed variants (no TS errors)
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.3, delayChildren: 0.2 },
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.2,
+      },
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8 },
+      transition: {
+        duration: 0.8,
+        ease: "easeOut", // ✅ safe (no TS error)
+      },
     },
   };
 
@@ -27,49 +34,47 @@ export default function WhoIAm() {
       
       {/* BACKGROUND */}
       <motion.div
-        animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-        transition={{ duration: 20, repeat: Infinity }}
-        className="absolute -top-[10%] -right-[5%] w-[400px] h-[400px] rounded-full opacity-[0.03]"
+        className="absolute -top-[10%] -right-[5%] w-[500px] h-[500px] rounded-full opacity-[0.03] pointer-events-none"
         style={{ backgroundColor: "#b684ff" }}
+        animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
 
       <div className="container mx-auto px-6 md:px-12">
         <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
         >
 
           {/* LEFT IMAGE */}
           <motion.div variants={itemVariants} className="relative">
+            
             <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 5, repeat: Infinity }}
-              className="relative z-10 rounded-3xl overflow-hidden shadow-xl"
+              className="relative z-10 rounded-3xl overflow-hidden shadow-[0_32px_64px_-15px_rgba(0,0,0,0.2)] h-[400px] md:h-[500px] lg:h-[600px]"
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
               <Image
                 src="/portf/exp.jpg"
                 alt="Who I am"
-                width={600}
-                height={700}
+                fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                className="object-cover scale-110 hover:scale-100 transition-transform duration-700"
               />
 
               {/* EXPERIENCE CARD */}
               <motion.div
-                initial={{ x: -40, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="absolute bottom-6 right-6 bg-white/80 backdrop-blur-md p-4 rounded-xl shadow"
+                variants={itemVariants}
+                className="absolute bottom-8 right-8 bg-white/70 backdrop-blur-xl p-6 rounded-2xl border border-white/50 shadow-xl"
               >
-                <span className="block text-2xl font-bold text-[#b684ff]">
+                <span className="block text-3xl font-black text-[#b684ff]">
                   01+
                 </span>
-                <span className="text-xs text-gray-500 uppercase">
+                <span className="text-gray-500 text-xs uppercase tracking-widest font-bold">
                   Years Experience
                 </span>
               </motion.div>
@@ -83,52 +88,86 @@ export default function WhoIAm() {
           </motion.div>
 
           {/* RIGHT CONTENT */}
-          <div className="flex flex-col space-y-6">
-            <motion.div variants={itemVariants}>
-              <span className="text-xs uppercase tracking-widest text-gray-400">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col space-y-8"
+          >
+            <div>
+              <span className="inline-block px-4 py-1 rounded-full text-[10px] font-bold tracking-[0.3em] uppercase bg-white border border-gray-100 shadow-sm text-gray-400 mb-6">
                 Discovery
               </span>
 
-              <h2 className="text-4xl md:text-5xl font-black text-gray-900">
-                Who <span className="text-[#b684ff]">I Am</span>
+              <h2 className="text-5xl font-black text-gray-900 tracking-tighter leading-[0.9]">
+                Who <span className="text-[#b684ff]">I Am.</span>
               </h2>
-            </motion.div>
+            </div>
 
-            <motion.div variants={itemVariants} className="space-y-4">
-              <p className="text-lg text-gray-600">
-                I am a Digital Architect specializing in building high-performance web experiences.
+            <div className="space-y-6">
+              <p className="text-xl text-gray-600 font-medium leading-relaxed">
+                I am a Digital Architect specializing in crafting high-performance
+                web experiences.
               </p>
 
-              <p className="text-gray-500">
-                I combine <b>technical precision</b> with <b>creative intuition</b> to deliver clean and modern UI.
+              <p className="text-gray-500 leading-relaxed">
+                My approach combines{" "}
+                <span className="text-black font-semibold">
+                  technical precision
+                </span>{" "}
+                with{" "}
+                <span className="text-black font-semibold">
+                  creative intuition
+                </span>.
               </p>
-            </motion.div>
+            </div>
 
             {/* SKILLS */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
-              {["Full Stack", "Creative Dev", "Architecture"].map((skill) => (
-                <motion.span
-                  key={skill}
-                  whileHover={{ y: -5 }}
-                  className="px-4 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-bold hover:bg-[#b684ff] hover:text-white transition"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </motion.div>
+            <div className="flex flex-wrap gap-3">
+              {["Full Stack", "Creative Dev", "Software Architecture"].map(
+                (skill) => (
+                  <motion.span
+                    key={skill}
+                    whileHover={{
+                      y: -5,
+                      backgroundColor: "#b684ff",
+                      color: "#fff",
+                    }}
+                    className="px-5 py-2 rounded-full border border-gray-200 text-gray-600 text-sm font-bold transition-colors"
+                  >
+                    {skill}
+                  </motion.span>
+                )
+              )}
+            </div>
 
             {/* BUTTON */}
-            <motion.div variants={itemVariants}>
+            <div className="pt-6">
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-6 py-3 rounded-full text-white font-bold bg-[#b684ff]"
+                className="inline-flex items-center justify-center px-10 py-5 rounded-full text-white font-black text-lg shadow-2xl hover:shadow-[#b684ff]/40 transition-shadow"
+                style={{ backgroundColor: "#b684ff" }}
               >
                 Let&apos;s Build Together
+
+                <motion.svg
+                  animate={{ x: [0, 6, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                  className="w-5 h-5 ml-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </motion.svg>
               </motion.a>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
         </motion.div>
       </div>

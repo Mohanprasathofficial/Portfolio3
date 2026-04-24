@@ -94,7 +94,7 @@ export default function HeroSection() {
             <div className="relative drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)]">
 
               {/* BACK IMAGE */}
-              <div className="absolute bottom-0 right-8 mb-24 w-[350px] h-[520px] z-0">
+              <div className="absolute bottom-0 right-8 mb-24 w-[500px] h-[520px] z-0">
                 <Image
                   src="/portf/mybackimg.png"
                   alt="background person"
@@ -104,7 +104,7 @@ export default function HeroSection() {
               </div>
 
               {/* MAIN IMAGE */}
-              <div className="relative w-[400px] h-[650px] z-10">
+              <div className="relative w-[600px] h-[650px] z-10">
                 <Image
                   src="/portf/mohandanner.png"
                   alt="Mohan"

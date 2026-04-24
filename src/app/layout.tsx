@@ -20,8 +20,8 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "HOC Globe",
-  description: "HOC Globe Management",
+  title: "Portfolio",
+  description: "Portfolio Management",
 };
 
 export default function RootLayout({
